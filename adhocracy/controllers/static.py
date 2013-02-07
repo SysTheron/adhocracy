@@ -18,7 +18,7 @@ class StaticController(BaseController):
         begin_time = time()
         c.static = get_static_page(page_name)
         c.active_global_nav = page_name
-        if c.static == None:
+        if c.static is None:
             abort(404, _('The requested page was not found'))
         if format == 'simple':
             ret = render('/plain_doc.html')
