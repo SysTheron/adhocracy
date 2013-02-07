@@ -8,8 +8,13 @@ from pylons.i18n import _
 from adhocracy import i18n
 from adhocracy.lib import util
 
-
 class StaticPage(object):
+
+    def __init__(self, title, body):
+        self.title = title
+        self.body = body
+
+class FileStaticPage(object):
     VALID_PAGE = re.compile("^[a-zA-Z0-9\_\-]*$")
     DIR = 'page'
     SUFFIX = '.html'
@@ -43,3 +48,11 @@ class StaticPage(object):
         self.title = root.find('.//title').text
         self.exists = True
         return self.title
+
+# TODO Add DatabaseStaticPage
+
+def get_static_page(name):
+   static_page = FileStaticPage(name)
+   if static_page.exists == False:
+       return None
+   return StaticPage(static_page.title, static_page.name)
