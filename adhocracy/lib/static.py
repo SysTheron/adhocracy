@@ -14,10 +14,11 @@ class FileStaticPage(object):
 
     @staticmethod
     def create(key, lang): 
-        try:
             filename = util.get_path('page', os.path.basename(key) + u"." + lang + ".html")
+       try:
             root = parse(filename)
-        except Exception, e:
+        except Exception as e:
+            print e
             return None
         body = root.find('.//body')
         body.tag = 'span'
