@@ -6,8 +6,8 @@ from pylons import tmpl_context as c
 from pylons.i18n import _
 from pylons import config
 from paste.deploy.converters import asbool
-from adhocracy.model import StaticContent
 from adhocracy.model import meta
+import adhocracy.model as model
 
 from adhocracy.lib import util
 
@@ -34,8 +34,5 @@ def get_static_page(key, lang='en'):
     if config_value == 'file':
         static_page = FileStaticPage.create(key, lang)
     elif config_value == 'database':
-        query = meta.Session.query(StaticContent)
-        query = meta.Session.filter(StaticCotent.key == key)
-        query = meta.Session.filter(StaticContent.lang == lang)
-	static_page = query.one()
+	static_page = model.StaticContent.find(key, lang)
     return static_page

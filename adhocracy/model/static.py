@@ -24,15 +24,15 @@ class StaticContent(object):
         self.key = key
         self.lang = lang
 
-	@classmethod
-	def find(cls, key, lang):
-           try:
-	       q = meta.Session.query(StaticContent)
-	       q = q.filter(StaticContent.key == key)
-               q = q.filter(StaticContent.lang == lang)
-	       return q.one()
-	   except Exception, e:
-	       log.warn("find(%s): %s " % (content_name, e))
+    @staticmethod
+    def find(key, lang):
+        try:
+            q = meta.Session.query(StaticContent)
+	    q = q.filter(StaticContent.key == key)
+            q = q.filter(StaticContent.lang == lang)
+	    return q.one()
+	except Exception, e:
+	    log.warn("find(%s): %s " % (content_name, e))
 
-        def __repr__(self):
-	    return "<StaticContent(%s,%s)>" % (self.id, self.title)
+    def __repr__(self):
+	 return "<StaticContent(%s,%s)>" % (self.id, self.title)
