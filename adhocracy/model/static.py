@@ -1,14 +1,14 @@
 import logging
 from datetime import datetime
 
-from sqlalchemy import Table, Colum, ForeignKey, or_
+from sqlalchemy import Table, Column, ForeignKey, or_
 from sqlalchemy import Integer, Unicode, UnicodeText
 from sqlalchemy.orm import reconstructor
 
 import meta
 log = logging.getLogger(__name__)
 
-static_table = Table('static_content', meta.data,
+staticcontent_table = Table('static_content', meta.data,
     Column('id', Integer, primary_key=True),
     Column('title', Unicode(255), nullable=False, index=True),
     Column('body', UnicodeText, nullable=False, index=True)
