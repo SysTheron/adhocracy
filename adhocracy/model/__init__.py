@@ -45,6 +45,9 @@ from adhocracy.model.text import Text, text_table
 from adhocracy.model.milestone import Milestone, milestone_table
 from adhocracy.model.selection import Selection, selection_table
 from adhocracy.model.requestlog import RequestLog, requestlog_table
+from adhocracy.model.static import StaticContent, staticcontent_table
+
+mapper(StaticContent, staticcontent_table)
 
 mapper(User, user_table, properties={
     'email': synonym('_email', map_column=True),
