@@ -65,7 +65,7 @@ class User(meta.Indexable):
 
     def _get_locale(self):
         if not self._locale:
-            self._locale = 'en'
+            self._locale = u'en'
         return Locale.parse(self._locale)
 
     def _set_locale(self, locale):

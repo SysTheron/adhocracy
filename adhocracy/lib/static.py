@@ -4,6 +4,10 @@ import os.path
 from lxml.html import parse, tostring
 from pylons import tmpl_context as c
 from pylons.i18n import _
+from pylons import config
+from paste.deploy.converters import asbool
+from adhocracy.model import StaticContent
+from adhocracy.model import meta
 
 from adhocracy.lib import util
 
@@ -25,6 +29,13 @@ class FileStaticPage(object):
         self = FileStaticPage(tostring(body), title)
         return self
 
-def get_static_page(key, lang='de'):
-    static_page = FileStaticPage.create(key, lang)
+def get_static_page(key, lang='en'):
+    config_value = config.get('adhocracy.static_page_source', 'file') 
+    if config_value == 'file':
+        static_page = FileStaticPage.create(key, lang)
+    elif config_value == 'database':
+        query = meta.Session.query(StaticContent)
+        query = meta.Session.filter(StaticCotent.key == key)
+        query = meta.Session.filter(StaticContent.lang == lang)
+	static_page = query.one()
     return static_page
