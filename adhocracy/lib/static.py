@@ -2,7 +2,7 @@ import re
 import os.path
 
 from lxml.html import parse, tostring
-from pylons import tmpl_context as c
+from pylons import config 
 from pylons.i18n import _
 
 from adhocracy.lib import util
@@ -14,18 +14,19 @@ class FileStaticPage(object):
 
     @staticmethod
     def create(key, lang): 
-            filename = util.get_path('page', os.path.basename(key) + u"." + lang + ".html")
+       filename = util.get_path('page', os.path.basename(key) + u"." + lang + ".html")
        try:
             root = parse(filename)
-        except Exception as e:
-            print e
+       except TypeError as e:
             return None
-        body = root.find('.//body')
-        body.tag = 'span'
-        title = root.find('.//title').text
-        self = FileStaticPage(tostring(body), title)
-        return self
+       body = root.find('.//body')
+       body.tag = 'span'
+       title = root.find('.//title').text
+       self = FileStaticPage(tostring(body), title)
+       return self
 
-def get_static_page(key, lang='de'):
+def get_static_page(key, lang=''):
+    if lang is '':
+        lang = config.get('localhostguage')[:2]
     static_page = FileStaticPage.create(key, lang)
     return static_page
