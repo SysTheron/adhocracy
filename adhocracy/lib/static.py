@@ -6,6 +6,7 @@ from pylons import config
 
 from adhocracy import i18n
 from adhocracy.lib import util
+from pylons import tmpl_context as c
 
 class FileStaticPage(object):
     def __init__(self, body, title):
@@ -27,6 +28,9 @@ class FileStaticPage(object):
 
 def get_static_page(key, lang=None):
     if lang is None:
-        lang = str(i18n.get_default_locale())[:2]
-    static_page = FileStaticPage.create(key, lang)
+        for i in [c.locale, i18n.get_default_locale()]:
+	    lang = i.language
+            static_page = FileStaticPage.create(key, lang)
+	    if static_page is not None:
+	        break
     return static_page
