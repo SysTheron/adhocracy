@@ -16,10 +16,12 @@ class FileStaticPage(object):
     @staticmethod
     def create(key, lang): 
        filename = util.get_path('page', os.path.basename(key) + "." + lang + ".html")
-       try:
-            root = parse(filename)
-       except TypeError as e:
-            return None
+       if filename is None:
+           return None
+       else:
+           root = parse(filename)
+       #except TypeError as e:
+       #return None
        body = root.find('.//body')
        body.tag = 'span'
        title = root.find('.//title').text
@@ -28,9 +30,8 @@ class FileStaticPage(object):
 
 def get_static_page(key, lang=None):
     if lang is None:
-        for i in [c.locale, i18n.get_default_locale()]:
-	    lang = i.language
-            static_page = FileStaticPage.create(key, lang)
-	    if static_page is not None:
-	        break
-    return static_page
+        for locale in [c.locale, i18n.get_default_locale()]:
+            lang = locale.language
+            return FileStaticPage.create(key, lang)
+    else:
+        return FileStaticPage.create(key, lang)
