@@ -15,22 +15,26 @@ class FileStaticPage(object):
 
     @staticmethod
     def create(key, lang): 
-       filename = util.get_path('page', os.path.basename(key) + "." + lang + ".html")
+       #filename = util.get_path('page', os.path.basename(key) + "." + lang + ".html")
+       filename = util.get_path('page', 'about.de.html')
        if filename is None:
            return None
        else:
-           root = parse(filename)
-       #except TypeError as e:
-       #return None
-       body = root.find('.//body')
-       body.tag = 'span'
-       title = root.find('.//title').text
-       self = FileStaticPage(tostring(body), title)
-       return self
+           try: 
+               root = parse(filename)
+	   except IOError as e:
+	       return None
+       try: 
+           body = root.find('.//body')
+           body.tag = 'span'
+           title = root.find('.//title').text
+           return FileStaticPage(tostring(body), title)
+       except AttributeError as e:
+           return None
 
 def get_static_page(key, lang=None):
     if lang is None:
-        for locale in [c.locale, i18n.get_default_locale()]:
+        for locale in ([c.locale, i18n.get_default_locale()] + i18n.LOCALES):
             lang = locale.language
             return FileStaticPage.create(key, lang)
     else:
