@@ -15,8 +15,7 @@ class FileStaticPage(object):
 
     @staticmethod
     def create(key, lang): 
-       #filename = util.get_path('page', os.path.basename(key) + "." + lang + ".html")
-       filename = util.get_path('page', 'about.de.html')
+       filename = util.get_path('page', os.path.basename(key) + "." + lang + ".html")
        if filename is None:
            return None
        else:
