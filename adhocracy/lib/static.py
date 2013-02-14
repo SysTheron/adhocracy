@@ -1,9 +1,5 @@
-import re
 import os.path
-
 from lxml.html import parse, tostring
-from pylons import config 
-
 from adhocracy import i18n
 from adhocracy.lib import util
 from pylons import tmpl_context as c
@@ -15,7 +11,7 @@ class FileStaticPage(object):
 
     @staticmethod
     def create(key, lang): 
-        filename = util.get_path('page', os.path.basename(key) + "." + lang + ".html")
+        filename = util.get_path('page', os.path.basename(key) + '.' + lang + '.html')
         try: 
             root = parse(filename)
         except IOError as e:
