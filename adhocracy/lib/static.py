@@ -18,14 +18,17 @@ class FileStaticPage(object):
             return None
         try: 
             body = root.find('.//body')
+	    title = root.find('.//title').text
         except AttributeError as e:
             return None
         body.tag = 'span'
-        title = root.find('.//title').text
         return FileStaticPage(tostring(body), title)
 
 def get_static_page(key, lang=None):
     if lang is None:
         for loc in [c.locale, i18n.get_default_locale()] + i18n.LOCALES:
-            return FileStaticPage.create(key, loc.language)
+            page = FileStaticPage.create(key, loc.language)
+	    if page is not None:
+	        return page
+	return None
     return FileStaticPage.create(key, lang)
