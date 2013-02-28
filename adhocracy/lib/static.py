@@ -12,6 +12,8 @@ class FileStaticPage(object):
     @staticmethod
     def create(key, lang): 
         filename = util.get_path('page', os.path.basename(key) + '.' + lang + '.html')
+        if filename is None:
+            return None
         try: 
             root = parse(filename)
         except IOError as e:
@@ -24,8 +26,8 @@ class FileStaticPage(object):
         body.tag = 'span'
         return FileStaticPage(tostring(body), title)
 
-def get_static_page(key, lang=None):
-    if lang is None:
+def get_static_page(key, language=None):
+    if language is None:
         for locale in [c.locale, i18n.get_default_locale()] + i18n.LOCALES:
             page = FileStaticPage.create(key, locale.language)
 	    if page is not None:
