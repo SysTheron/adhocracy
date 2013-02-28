@@ -16,11 +16,11 @@ class FileStaticPage(object):
             return None
         try: 
             root = parse(filename)
-        except IOError as e:
+        except IOError:
             return None
-        try: 
+        try:
             body = root.find('.//body')
-	    title = root.find('.//title').text
+            title = root.find('.//title').text
         except AttributeError:
             return None
         body.tag = 'span'
@@ -30,7 +30,7 @@ def get_static_page(key, language=None):
     if language is None:
         for locale in [c.locale, i18n.get_default_locale()] + i18n.LOCALES:
             page = FileStaticPage.create(key, locale.language)
-	    if page is not None:
-	        return page
-	return None
+            if page is not None:
+                return page
+        return None
     return FileStaticPage.create(key, lang)
