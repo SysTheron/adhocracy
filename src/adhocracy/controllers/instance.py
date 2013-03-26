@@ -159,8 +159,7 @@ class InstanceSnameEditForm(formencode.Schema):
 class InstanceController(BaseController):
 
     def __before__(self, id):
-        instance = self._get_current_instance(id)
-        if instance.frozen:
+        if c.instance.frozen:
             flash(_("This instance is currently frozen. You are currently "
                 "not able to edit it."))
 
