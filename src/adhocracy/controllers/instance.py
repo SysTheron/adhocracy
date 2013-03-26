@@ -217,8 +217,7 @@ class InstanceController(BaseController):
         if c.page_instance != c.instance:
             redirect(h.entity_url(c.page_instance))
 
-        instance = self._get_current_instance(id)
-        if instance.frozen == True:
+        if c.page_instance.frozen:
             flash("This instance is currently frozen.")
 
         c.tile = tiles.instance.InstanceTile(c.page_instance)
