@@ -218,7 +218,8 @@ class InstanceController(BaseController):
             redirect(h.entity_url(c.page_instance))
 
         if c.page_instance.frozen:
-            flash("This instance is currently frozen.")
+            flash(_("This instance is currently frozen. You are currently "
+                "not able to edit it."))
 
         c.tile = tiles.instance.InstanceTile(c.page_instance)
         c.sidebar_delegations = (_('Delegations are enabled.') if
