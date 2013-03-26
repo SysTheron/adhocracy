@@ -24,6 +24,7 @@ from adhocracy.lib.queue import update_entity
 from adhocracy.lib.templating import (render, render_json, render_png,
                                       ret_abort, ret_success, render_def)
 from adhocracy.lib.util import get_entity_or_abort
+from adhocracy.lib.helpers import flash
 
 
 log = logging.getLogger(__name__)
@@ -215,6 +216,10 @@ class InstanceController(BaseController):
 
         if c.page_instance != c.instance:
             redirect(h.entity_url(c.page_instance))
+
+        instance = self._get_current_instance(id)
+        if instance.frozen == True:
+            flash("This instance is currently frozen.")
 
         c.tile = tiles.instance.InstanceTile(c.page_instance)
         c.sidebar_delegations = (_('Delegations are enabled.') if
