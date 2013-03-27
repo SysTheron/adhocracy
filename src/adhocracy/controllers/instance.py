@@ -159,9 +159,12 @@ class InstanceSnameEditForm(formencode.Schema):
 class InstanceController(BaseController):
 
     def __before__(self):
-        if c.instance.frozen:
-            flash(_("This instance is currently frozen. You are currently "
-                "not able to edit it."))
+        if c.instance is None:
+            pass
+        else:
+            if c.instance.frozen:
+               flash(_("This instance is currently frozen. You are "
+                    "currently not able to edit it."))
 
     def index(self, format="html"):
         require.instance.index()
