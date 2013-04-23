@@ -1,11 +1,17 @@
 <%
 from urllib import urlencode
+from pylons import session
 
-came_from = request.params.get('came_from', '')
+if request.params.get('came_form', '') is not '':
+    came_from = request.params.get('came_from', '')
+else:
+    came_from = request.path
 query_string = ''
 if came_from:
     query_string = '?%s' % urlencode({'came_from': came_from.encode('utf-8')})
-    
+
+session['came_from'] = came_from
+
 login_titleandtype = h.allowed_login_types()
 if 'username+password' in login_titleandtype and 'email+password' in login_titleandtype:
     field_title = _('Email or username:')
