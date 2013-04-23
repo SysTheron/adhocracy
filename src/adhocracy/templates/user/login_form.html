@@ -6,9 +6,8 @@ if request.params.get('came_form', '') is not '':
     came_from = request.params.get('came_from', '')
 else:
     came_from = request.path
-query_string = ''
-if came_from:
-    query_string = '?%s' % urlencode({'came_from': came_from.encode('utf-8')})
+
+query_string = '?%s' % urlencode({'came_from': came_from.encode('utf-8')})
 
 session['came_from'] = came_from
 
