@@ -2,12 +2,16 @@
 from urllib import urlencode
 from pylons import session
 
-if request.params.get('came_form', '') is not '':
-    came_from = request.params.get('came_from', '')
-else:
+came_from = request.params.get('came_from', '')
+if came_from == '':
     came_from = request.path
 
-query_string = '?%s' % urlencode({'came_from': came_from.encode('utf-8')})
+if c.instance is None:
+    pass
+else:
+    came_from = '/i/' + c.instance.key + came_from
+
+query_string = '?' + urlencode({'came_from': came_from.encode('utf-8')})
 
 session['came_from'] = came_from
 
@@ -23,7 +27,7 @@ else:
         field_title = _('Email:')
         field_type = 'email'
 %>
-<div class="form_wrapper">
+<div>
   <form name="login" method="POST" action="/perform_login">
     <div class="input_wrapper">
       <label>${field_title}
