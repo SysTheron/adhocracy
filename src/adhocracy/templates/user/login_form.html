@@ -3,8 +3,11 @@ from urllib import urlencode
 from pylons import session
 
 came_from = request.params.get('came_from', '')
+div_class = ''
 if came_from == '':
     came_from = request.path
+else:
+    div_class = 'class=form_wrapper'
 
 if c.instance is None:
     pass
@@ -27,7 +30,7 @@ else:
         field_title = _('Email:')
         field_type = 'email'
 %>
-<div>
+<div ${div_class}>
   <form name="login" method="POST" action="/perform_login">
     <div class="input_wrapper">
       <label>${field_title}
