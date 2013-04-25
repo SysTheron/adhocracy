@@ -1,16 +1,12 @@
+<%page args="embed=False" />
 <%
 from urllib import urlencode
 from pylons import session
 
-came_from = request.params.get('came_from', '')
+came_from = h.base_url()
 div_class = 'class=form_inline_wrapper'
-if came_from == '':
-    came_from = request.path
-else:
+if not embed:
     div_class = 'class=form_wrapper'
-
-if c.instance:
-    came_from = request.host_url + '/i/' + c.instance.key + came_from
 
 query_string = '?' + urlencode({'came_from': came_from.encode('utf-8')})
 
