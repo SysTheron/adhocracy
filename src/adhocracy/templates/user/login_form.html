@@ -5,8 +5,6 @@ from pylons import session
 
 came_from = h.base_url()
 div_class = 'form_inline_wrapper' if embed else 'form_wrapper'
-if not embed:
-    div_class = 'form_wrapper'
 
 query_string = '?' + urlencode({'came_from': came_from.encode('utf-8')})
 
