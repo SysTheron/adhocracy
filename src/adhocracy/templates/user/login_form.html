@@ -4,9 +4,9 @@ from urllib import urlencode
 from pylons import session
 
 came_from = h.base_url()
-div_class = 'class=form_inline_wrapper'
+div_class = 'form_inline_wrapper' if embed else 'form_wrapper'
 if not embed:
-    div_class = 'class=form_wrapper'
+    div_class = 'form_wrapper'
 
 query_string = '?' + urlencode({'came_from': came_from.encode('utf-8')})
 
@@ -24,7 +24,7 @@ else:
         field_title = _('Email:')
         field_type = 'email'
 %> 
-<div ${div_class}>
+<div class="${div_class}">
   <form name="login" method="POST" action="/perform_login">
     <div class="input_wrapper">
       <label>${field_title}
